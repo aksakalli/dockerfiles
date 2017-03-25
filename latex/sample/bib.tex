@@ -1,0 +1,25 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[backend=bibtex,
+style=numeric,
+bibencoding=ascii
+%style=alphabetic
+%style=reading
+]{biblatex}
+\addbibresource{sample.bib}
+
+\title{Bibliography management: \texttt{biblatex} package}
+\author{Share\LaTeX}
+
+\begin{document}
+
+\maketitle
+
+This document is an example of \texttt{biblatex} package using in bibliography management. Three items are cited: \textit{The \LaTeX\ Companion} book \cite{latexcompanion}, the Einstein journal paper \cite{einstein}, and the Donald Knuth's website \cite{knuthwebsite}. The \LaTeX\ related items are \cite{latexcompanion,knuthwebsite}. 
+
+\medskip
+
+\printbibliography
+
+\end{document}
