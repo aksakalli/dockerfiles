@@ -2,21 +2,22 @@
 
 ## Usage
 
-Building the image:
+```terminal
+docker run -it  aksakalli/latex
+```
+Now the sample template inside your container can be compiled:
 
 ```terminal
-docker build -t latex .
+cd sample
+pdflatex bib && bibtex bib && pdflatex bib
 ```
 
-Running the image with volume mounting to the desired workspace.
+This image comes with `vim` and `git` to easily clone & edit a latex document.
+
+**Mounting the workspace folder**
+
+It is easy to use host machine tools such as *GUI text editors* by mounting the workspace volume to desired host folder (such as `~/Documents/latex`):
 
 ```terminal
-docker run -it -v ~/Documents/latex:/workspace latex
-```
-
-Now you can compile the latex files inside the mounted volume via docker image shell.
-
-```terminal
-$ cd sample
-$ pdflatex bib.tex && biber bib && pdflatex.tex
+docker run -it -v ~/Documents/latex:/workspace aksakalli/latex
 ```
