@@ -51,7 +51,7 @@ RUN set -xe \
 
 # Now compile EMQ Project
 
-ENV EMQ_VERSION=v2.2-beta.3
+ENV EMQ_VERSION=v2.2-rc.1
 
 COPY ./start.sh /start.sh
 
@@ -74,7 +74,7 @@ RUN apt-get remove -qq --purge -y $BUILD_PACKAGES \
 WORKDIR /opt/emqttd
 
 # start emqttd and initial environments
-CMD ["bash /opt/emqttd/start.sh"]
+CMD ["bash", "/opt/emqttd/start.sh"]
 
 VOLUME ["/opt/emqttd/log", "/opt/emqttd/data", "/opt/emqttd/lib", "/opt/emqttd/etc"]
 
