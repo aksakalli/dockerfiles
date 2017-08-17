@@ -30,17 +30,18 @@ docker run -d --rm \
 
 #### BONUS
 
-Publish test SenML messages every second like:
+Publish dummy [OGC SensorThings](http://docs.opengeospatial.org/is/15-078r6/15-078r6.html) _Observation_ every second like:
 
 ```json
 {
-    "e": [{
-        "v": 19181 //Random number
-    }],
-    "bn": "dev1",
-    "bt": "1502834003" //Current timestamp
+  "Datastream":{  
+    "@iot.id":"1"
+  },
+  "result":42,
+  "resultTime":"2017-08-17T15:43:59Z"
 }
 ```
+
 
 by running the bash script `publish.sh`:
 
