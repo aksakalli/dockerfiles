@@ -1,0 +1,46 @@
+version: "3"
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  # optional
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.6.1
+    ports:
+      - "5601:5601"
+    environment:
+      - "ELASTICSEARCH_URL=http://elasticsearch:9200"
+    depends_on:
+      - elasticsearch
+
+  cassandra:
+    image: cassandra:3.11
+
+  carbon-cache:
+    image: aksakalli/biggraphite
+    volumes:
+      - ./conf:/conf
+    ports:
+      - "2003:2003"
+    depends_on:
+      - cassandra
+      - elasticsearch
+    command: carbon-cache
+
+  graphite-webapp:
+    image: aksakalli/biggraphite
+    volumes:
+      - ./conf:/conf
+    ports:
+      - "8080:8080"
+    depends_on:
+      - carbon-cache
+    command: graphite-webapp
