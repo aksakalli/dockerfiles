@@ -4,6 +4,7 @@ RUN conda install --yes -c conda-forge mlflow
 
 WORKDIR /
 
+RUN mkdir /mlruns
 VOLUME /mlruns
 EXPOSE 5000
 
