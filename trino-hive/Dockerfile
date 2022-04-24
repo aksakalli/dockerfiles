@@ -46,6 +46,7 @@ RUN curl -L https://archive.apache.org/dist/hive/hive-standalone-metastore-${MET
   curl -L https://jdbc.postgresql.org/download/postgresql-42.3.4.jar -o ${HIVE_HOME}/lib/postgresql-42.3.4.jar
 ENV PATH="${HIVE_HOME}/bin:${PATH}"
 COPY metastore-site.xml ${HIVE_HOME}/conf
+RUN /etc/init.d/postgresql start && schematool -initSchema -dbType postgres
 EXPOSE 9083
 
 # TRINO
