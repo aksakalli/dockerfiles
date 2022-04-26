@@ -117,7 +117,7 @@ We can list databases and tables under with a join.
 SELECT d.name, t.tbl_name, t.tbl_type, t.owner 
 FROM metastore.public.tbls t 
 JOIN metastore.public.dbs d 
-ON t.db_id=d.db_id;
+  ON t.db_id=d.db_id;
 ```
 Location is stored in `sds` table and "serde" (serializer/deserializer) information in `serdes` table.
 We can list this information with two join statement.
