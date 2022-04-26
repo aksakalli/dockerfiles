@@ -85,10 +85,7 @@ This catalog provides schemas with generated data for benchmarking.
 
 ```sql
 CREATE TABLE hive.test.customer
-WITH (
-  format = 'parquet',
-  external_location = 's3a://testbucket/customer/'
-)
+WITH (format='parquet', external_location = 's3a://testbucket/customer/')
 AS SELECT * FROM tpch.tiny.customer;
 ```
 
@@ -98,6 +95,10 @@ the table is accessible from a select statement.
 ```sql
 SELECT * FROM hive.test.customer LIMIT 50;
 ```
+
+This example creates a parquet table however Trino's [Hive connector](https://trino.io/docs/current/connector/hive.html) 
+supports many other file formats.
+
 ### Metastore Catalog
 
 The table creation process stores the table definition into the database of Hive Metastore.
@@ -152,7 +153,7 @@ Create a table, insert some records, and then verify:
 
 ```sql
 CREATE TABLE delta.myschema.mytable (name varchar, id integer);
-INSERT INTO delta.myschema.mytable VALUES ( 'John', 1), ('Jane', 2);
+INSERT INTO delta.myschema.mytable VALUES ('John', 1), ('Jane', 2);
 SELECT * FROM delta.myschema.mytable;
 ```
 
