@@ -144,7 +144,7 @@ JOIN metastore.public.columns_v2 c
   ON s.cd_id = c.cd_id
 WHERE t.tbl_name = 'customer'
  AND d.NAME='test'
-ORDER by CD_ID, INTEGER_IDX;
+ORDER by cd_id, integer_idx;
 ```
 
 ### Delta Catalog
