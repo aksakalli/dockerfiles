@@ -56,7 +56,7 @@ Start the container.
 docker run -d -p 8080:8080 -p 5432:5432 -p 9083:9083 -p 9000:9000 -p 9001:9001 --name trino-hive aksakalli/trino-hive
 ```
 
-Use docker exec to run commands inside the container and create a bucket folders for minio.
+Use docker exec to run commands inside the container and create a bucket folder for minio.
 
 ```bash
 docker exec -it trino-hive bash
