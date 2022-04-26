@@ -71,8 +71,7 @@ You can alternatively create and browse the minio buckets via the Minio web UI e
 Run the `trino` command inside the container and run the following SQL statement to create a schema.
 
 ```sql
-CREATE SCHEMA hive.test
-WITH (location = 's3a://testbucket/');
+CREATE SCHEMA hive.test WITH (location = 's3a://testbucket/');
 ```
 
 You can view the running queries in the Trino Web UI exposed at http://localhost:8080.
@@ -87,9 +86,9 @@ This catalog provides schemas with generated data for benchmarking.
 ```sql
 CREATE TABLE hive.test.customer
 WITH (
-    format = 'parquet',
-    external_location = 's3a://testbucket/customer/'
-) 
+  format = 'parquet',
+  external_location = 's3a://testbucket/customer/'
+)
 AS SELECT * FROM tpch.tiny.customer;
 ```
 
@@ -114,36 +113,29 @@ This is showing the schema that we created.
 We can list databases and tables under with a join.
 
 ```sql
-SELECT d.name, t.tbl_name, t.tbl_type, t.owner 
-FROM metastore.public.tbls t 
-JOIN metastore.public.dbs d 
-  ON t.db_id=d.db_id;
+SELECT d.name, t.tbl_name, t.tbl_type, t.owner
+FROM metastore.public.tbls t
+JOIN metastore.public.dbs d ON t.db_id=d.db_id;
 ```
 Location is stored in `sds` table and "serde" (serializer/deserializer) information in `serdes` table.
 We can list this information with two join statement.
 
 ```sql
 SELECT t.tbl_name, s.input_format, s.location, se.name, se.slib
-FROM metastore.public.tbls t 
-JOIN metastore.public.sds s 
-  ON t.sd_id=s.sd_id
-JOIN metastore.public.serdes se
-  ON s.serde_id = se.serde_id;
+FROM metastore.public.tbls t
+JOIN metastore.public.sds s ON t.sd_id=s.sd_id
+JOIN metastore.public.serdes se ON s.serde_id = se.serde_id;
 ```
 
 Following metadata query lists the columns for our table `hive.test.customer`.
 
 ```sql
-SELECT c.* 
+SELECT c.*
 FROM metastore.public.tbls t
-JOIN metastore.public.dbs d
-  ON t.db_id = d.db_id
-JOIN metastore.public.sds s
-  ON t.sd_id = s.sd_id
-JOIN metastore.public.columns_v2 c
-  ON s.cd_id = c.cd_id
-WHERE t.tbl_name = 'customer'
- AND d.NAME='test'
+JOIN metastore.public.dbs d ON t.db_id = d.db_id
+JOIN metastore.public.sds s ON t.sd_id = s.sd_id
+JOIN metastore.public.columns_v2 c ON s.cd_id = c.cd_id
+WHERE t.tbl_name = 'customer' AND d.NAME='test'
 ORDER by cd_id, integer_idx;
 ```
 
