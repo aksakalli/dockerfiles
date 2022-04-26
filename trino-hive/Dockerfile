@@ -4,6 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
   curl \
+  less \
   openjdk-11-jdk \
   postgresql-12 \
   python3 \
@@ -17,6 +18,8 @@ RUN curl https://dl.min.io/server/minio/release/linux-amd64/minio -o minio && \
   chmod +x minio && \
   mv minio /usr/local/bin/ && \
   mkdir /data
+ENV MINIO_ACCESS_KEY=minio
+ENV MINIO_SECRET_KEY=minio123
 ENV MINIO_ROOT_USER=minio
 ENV MINIO_ROOT_PASSWORD=minio123
 EXPOSE 9000 9001
@@ -50,9 +53,11 @@ RUN /etc/init.d/postgresql start && schematool -initSchema -dbType postgres
 EXPOSE 9083
 
 # TRINO
-ENV TRINO_VERSION=377
+ENV TRINO_VERSION=378
 ENV TRINO_HOME=/opt/trino-server-${TRINO_VERSION}
 RUN curl -L https://repo1.maven.org/maven2/io/trino/trino-server/${TRINO_VERSION}/trino-server-${TRINO_VERSION}.tar.gz | tar zxf -
+RUN curl -L https://repo1.maven.org/maven2/io/trino/trino-cli/${TRINO_VERSION}/trino-cli-${TRINO_VERSION}-executable.jar -o ${TRINO_HOME}/bin/trino && \
+  chmod +x ${TRINO_HOME}/bin/trino
 ENV PATH="${TRINO_HOME}/bin:${PATH}"
 COPY trino-etc ${TRINO_HOME}/etc
 EXPOSE 8080
