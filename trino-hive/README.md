@@ -36,6 +36,9 @@ Build the image yourself or pull it from dockerhub.
 docker build -t aksakalli/trino-hive .
 ```
 
+If you're using Podman on Apple silicon hardware like the M1s,
+you need to add `--platform linux/amd64` parameter or change the `JAVA_HOME` variable.
+
 Run with some exposed ports for debugging purpose:
 
 ```bash
